@@ -17,13 +17,11 @@ or
 ### Usage
 
 ```ruby
-
 require 'java'
 require 'ruby-jgap'
 
 # subclass JGAP::Problem
 class MakeChangeProblem < JGAP::Problem
-
   population_size 500
 
   # define our solution chromosome
@@ -50,8 +48,6 @@ class MakeChangeProblem < JGAP::Problem
     fitness += 100 - (10*coins) if value == target # reward if matches with goal
     return fitness
   end
-
-
 end
 
 problem = MakeChangeProblem.new
