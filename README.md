@@ -10,6 +10,10 @@ JGAP is licensed under the GNU Lesser Public license; if you would like to use t
 
     gem install ruby-jgap
 
+or
+
+    jruby -S gem install ruby-jgap
+
 ### Usage
 
 ```ruby
@@ -55,3 +59,14 @@ problem.run(100) # 100 generations
 problem.print_best
 
 ```
+
+This outputs (probably):
+
+```
+quarters: 1
+dimes: 2
+nickels: 0
+pennies: 2
+```
+
+Adapted from the [Getting Started](http://jgap.sourceforge.net/doc/tutorial.html) page on JGAP's site.
