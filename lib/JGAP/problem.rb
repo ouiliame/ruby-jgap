@@ -2,7 +2,6 @@ require 'java'
 require 'java/jgap.jar'
 
 java_import %w(
-  org.jgap.FitnessFunction
   org.jgap.impl.DefaultConfiguration
   org.jgap.impl.IntegerGene
   org.jgap.impl.BooleanGene
@@ -36,7 +35,7 @@ module JGAP
     
     def integer(name, opts={})
       @names[name] = @genes.length
-      if opts
+      unless opts.empty?
         @genes << IntegerGene.new(@config, opts[:min], opts[:max])
       else
         @genes << IntegerGene.new(@config)
@@ -45,7 +44,7 @@ module JGAP
     
     def decimal(name, opts={})
       @names[name] = @genes.length
-      if opts
+      unless opts.empty?
         @genes << DoubleGene.new(@config, opts[:min], opts[:max])
       else
         @genes << DoubleGene.new(@config)
@@ -59,7 +58,7 @@ module JGAP
     
     def string(name, opts={})
       @names[name] = @genes.length
-      if opts && opts[:alphabet]
+      if !opts.empty? && opts[:alphabet]
         @genes << StringGene.new(@config,
           opts[:min], opts[:max], opts[:alphabet])
       elsif opts
@@ -74,7 +73,7 @@ module JGAP
   
   ####
   
-  class Problem < FitnessFunction
+  class Problem < org.jgap.FitnessFunction
     
     attr_reader :best_solution
     
@@ -137,4 +136,5 @@ module JGAP
     end
     
   end
+  
 end

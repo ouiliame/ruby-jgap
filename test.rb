@@ -9,9 +9,9 @@ class MakeChangeProblem < JGAP::Problem
   # define our solution chromosome
   chromosome do
     integer :quarters, min: 0, max: 3
-    integer :dimes, min: 0, max: 2
-    integer :nickels, min: 0, max: 1
-    integer :pennies, min: 0, max: 4
+    integer :dimes,    min: 0, max: 2
+    integer :nickels,  min: 0, max: 1
+    integer :pennies,  min: 0, max: 4
   end
 
   # define our fitness function
