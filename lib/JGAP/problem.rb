@@ -1,6 +1,3 @@
-require 'java'
-require 'java/jgap.jar'
-
 java_import %w(
   org.jgap.impl.DefaultConfiguration
   org.jgap.impl.IntegerGene
@@ -31,6 +28,13 @@ module JGAP
     
     def read(subject, name)
       subject.gene(@names[name]).allele
+    end
+    
+    def salesman(name, cities)
+      new_gene = IntegerGene.new(@config, 0, cities - 1)
+      new_gene.set_allele java.lang.Integer.new(@genes.length)
+      @names[name] = @genes.length
+      @genes << new_gene
     end
     
     def integer(name, opts={})
@@ -80,10 +84,13 @@ module JGAP
     def initialize
       @config = DefaultConfiguration.new
       @chromosome = nil
-      @population_size = 0
+      @population_size = 512
       @population = nil
       @best_solution = nil
       @builder = ChromosomeBuilder.new(@config)
+      
+      chromosome
+      population_size
     end
   
     
@@ -92,11 +99,8 @@ module JGAP
     end
     
     def run(cycles=1)
-      chromosome
-      population_size
       @config.set_fitness_function(self)
       @config.set_sample_chromosome(@chromosome)
-      @config.set_population_size(@population_size)
       @population = Genotype.random_initial_genotype(@config)
       @population.evolve(cycles)
       @best_solution = @population.get_fittest_chromosome
@@ -121,6 +125,7 @@ module JGAP
     def self.population_size(size)
       define_method(:population_size) do
         @population_size = size
+        @config.set_population_size(@population_size)
       end
     end
     
