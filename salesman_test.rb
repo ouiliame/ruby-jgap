@@ -40,4 +40,3 @@ tsp = TSP.new
 tsp.run
 tsp.print_best
 p tsp.best_solution.fitness_value
-binding.pry

@@ -9,7 +9,6 @@ java_import %w(
   org.jgap.Genotype
   org.jgap.Configuration
 )
-require 'pry'
 
 module JGAP
   
