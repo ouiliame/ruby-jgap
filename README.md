@@ -22,14 +22,15 @@ require 'ruby-jgap'
 
 # subclass JGAP::Problem
 class MakeChangeProblem < JGAP::Problem
+
   population_size 500
 
   # define our solution chromosome
   chromosome do
     integer :quarters, min: 0, max: 3
-    integer :dimes, min: 0, max: 2
-    integer :nickels, min: 0, max: 1
-    integer :pennies, min: 0, max: 4
+    integer :dimes,    min: 0, max: 2
+    integer :nickels,  min: 0, max: 1
+    integer :pennies,  min: 0, max: 4
   end
 
   # define our fitness function
@@ -44,10 +45,10 @@ class MakeChangeProblem < JGAP::Problem
     value = 25*q + 10*d + 5*n + p
     delta = (target - value).abs # how far are we from our goal?
     
-    fitness = (99 - delta)
-    fitness += 100 - (10*coins) if value == target # reward if matches with goal
-    return fitness
+    minimize(coins + 2*delta) # minimize our cost
   end
+
+
 end
 
 problem = MakeChangeProblem.new

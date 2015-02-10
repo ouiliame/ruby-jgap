@@ -26,9 +26,7 @@ class MakeChangeProblem < JGAP::Problem
     value = 25*q + 10*d + 5*n + p
     delta = (target - value).abs # how far are we from our goal?
     
-    fitness = (99 - delta)
-    fitness += 100 - (10*coins) if value == target # reward if matches with goal
-    return fitness
+    minimize(coins + 2*delta)
   end
 
 

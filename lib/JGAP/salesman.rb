@@ -12,6 +12,23 @@ java_import %w(
 
 module JGAP
   
+  class ChromosomeBuilder
+
+    def salesman(names)
+      names.each do |name|
+        new_gene = IntegerGene.new(@config, 0, names.length)
+        new_gene.set_allele java.lang.Integer.new(@genes.length)
+        @names[name] = @genes.length
+        @genes << new_gene
+      end
+    end
+    
+    def get_name(num)
+      @names.invert[num]
+    end
+    
+  end
+  
   class Salesman < org.jgap.impl.salesman.Salesman
     attr_reader :best_solution
     
@@ -25,7 +42,14 @@ module JGAP
       chromosome
       population_size
     end
-  
+    
+    def distance(from, to)
+      distance_function(from.allele, to.allele)
+    end
+    
+    def get_name(num)
+      @builder.get_name(num)
+    end
     
     def setup
       # Override me!
@@ -54,15 +78,12 @@ module JGAP
       end
     end
     
-    def distance(from, to)
-      # Override me!
-    end
-    
     ## MACROS
     
     def self.population_size(size)
       define_method(:population_size) do
         @population_size = size
+        set_population_size(@population_size)
         @config.set_population_size(@population_size)
       end
     end
@@ -77,10 +98,8 @@ module JGAP
         @chromosome
       end
     end
+
     
-    def self.fitness_function(&block)
-      define_method(:evaluate, &block)
-    end
   end
   
 end

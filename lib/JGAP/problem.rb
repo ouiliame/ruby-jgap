@@ -30,13 +30,6 @@ module JGAP
       subject.gene(@names[name]).allele
     end
     
-    def salesman(name, cities)
-      new_gene = IntegerGene.new(@config, 0, cities - 1)
-      new_gene.set_allele java.lang.Integer.new(@genes.length)
-      @names[name] = @genes.length
-      @genes << new_gene
-    end
-    
     def integer(name, opts={})
       @names[name] = @genes.length
       unless opts.empty?
@@ -92,7 +85,7 @@ module JGAP
       chromosome
       population_size
     end
-  
+    
     
     def setup
       # Override me!
@@ -117,6 +110,18 @@ module JGAP
     def print_best
       @builder.names.each do |k, v|
         puts "#{k}: #{read_best k}"
+      end
+    end
+    
+    def minimize(value)
+      1.0/(1 + value.abs)
+    end
+    
+    def maximize(value)
+      if value <= 0
+        1/value.abs
+      else
+        value
       end
     end
     
